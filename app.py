@@ -17,11 +17,13 @@ def create_app(config_object=None):
     from routes.checklist import bp as checklist_bp
     from routes.feedback import bp as feedback_bp
     from routes.main import bp as main_bp
+    from routes.password import password_bp
     from routes.quiz import bp as quiz_bp
     from routes.scam import bp as scam_bp
     from routes.stats import bp as stats_bp
 
     app.register_blueprint(main_bp)
+    app.register_blueprint(password_bp)
     app.register_blueprint(scam_bp)
     app.register_blueprint(checklist_bp)
     app.register_blueprint(quiz_bp)

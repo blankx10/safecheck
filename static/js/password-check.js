@@ -19,7 +19,7 @@ async function checkPassword(password) {
   var hash = toHex(digest);
   var prefix = hash.slice(0, 5);
   var suffix = hash.slice(5);
-  var response = await fetch("/api/password-check-range/" + prefix);
+  var response = await fetch("/api/hibp/" + prefix);
   if (!response.ok) {
     throw new Error("泄露库暂时不可用");
   }
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify({ session_id: window.safecheckSessionId }),
       });
     } catch (error) {
-      showError("检查失败，请稍后再试。请确认可以访问泄露查询接口。");
+      showError("检查失败，请稍后再试。若持续失败，可能是服务暂时不可用。");
     }
   });
 });

@@ -3,7 +3,7 @@ import pytest
 from app import create_app
 from extensions import db
 from models import ChecklistItem, QuizScenario, ScamCheck
-from routes import scam as scam_routes
+from routes import password as password_routes
 from seeds.checklist_items import CHECKLIST_ITEMS
 from seeds.quiz_scenarios import QUIZ_SCENARIOS
 
@@ -95,23 +95,42 @@ def test_stats_api(client):
     assert "text_hash" not in data
 
 
-def test_password_check_range_proxy(client, monkeypatch):
+def test_hibp_proxy(client, monkeypatch):
     calls = []
 
     class FakeResponse:
-        stdout = b"00112233445566778899AABBCCDDEEFF0011:3\r\n"
+        text = "00112233445566778899AABBCCDDEEFF0011:3\r\n"
 
-    def fake_run(command, capture_output, check, timeout):
-        calls.append((command, capture_output, check, timeout))
+        def raise_for_status(self):
+            return None
+
+    def fake_get(url, headers, timeout):
+        calls.append((url, headers, timeout))
         return FakeResponse()
 
-    monkeypatch.setattr(scam_routes.subprocess, "run", fake_run)
-    response = client.get("/api/password-check-range/abc12")
+    monkeypatch.setattr(password_routes.requests, "get", fake_get)
+    response = client.get("/api/hibp/abc12")
 
     assert response.status_code == 200
-    assert response.data.startswith(b"00112233445566778899AABBCCDDEEFF0011:3")
-    assert calls[0][0][-1] == "https://api.pwnedpasswords.com/range/ABC12"
-    assert calls[0][3] == 12
+    assert response.text.startswith("00112233445566778899AABBCCDDEEFF0011:3")
+    assert response.content_type == "text/plain"
+    assert calls[0][0] == "https://api.pwnedpasswords.com/range/ABC12"
+    assert calls[0][1] == {"Add-Padding": "true", "User-Agent": "SafeCheck/1.0"}
+    assert calls[0][2] == 10
 
-    invalid = client.get("/api/password-check-range/not-a-hash")
+    invalid = client.get("/api/hibp/not-a-hash")
     assert invalid.status_code == 400
+    assert invalid.get_json() == {"error": "invalid prefix"}
+
+
+def test_hibp_proxy_upstream_failure_is_sanitized(client, monkeypatch, caplog):
+    def fake_get(url, headers, timeout):
+        raise password_routes.requests.Timeout("upstream timeout")
+
+    monkeypatch.setattr(password_routes.requests, "get", fake_get)
+    response = client.get("/api/hibp/abc12")
+
+    assert response.status_code == 502
+    assert response.get_json() == {"error": "upstream failed"}
+    assert "Timeout" in caplog.text
+    assert "ABC12" not in caplog.text

@@ -1,8 +1,6 @@
 import hashlib
 import json
 import logging
-import re
-import subprocess
 
 from flask import Blueprint, current_app, render_template, request, jsonify
 
@@ -13,7 +11,6 @@ from services.scam_rules import analyze_scam_text
 
 bp = Blueprint("scam", __name__)
 logger = logging.getLogger(__name__)
-PASSWORD_RANGE_PREFIX = re.compile(r"^[0-9A-Fa-f]{5}$")
 
 
 @bp.get("/scam")
@@ -56,41 +53,6 @@ def scam_check():
     if request.headers.get("HX-Request"):
         return render_template("partials/scam_result.html", result=result)
     return jsonify(result)
-
-
-@bp.get("/api/password-check-range/<prefix>")
-@limiter.limit("30 per minute")
-def password_check_range(prefix):
-    if not PASSWORD_RANGE_PREFIX.fullmatch(prefix):
-        return json_error("无效的哈希前缀", 400)
-
-    try:
-        response = subprocess.run(
-            [
-                "curl",
-                "--fail",
-                "--silent",
-                "--show-error",
-                "--max-time",
-                "10",
-                "-H",
-                "Add-Padding: true",
-                "-A",
-                "SafeCheck/1.0",
-                f"https://api.pwnedpasswords.com/range/{prefix.upper()}",
-            ],
-            capture_output=True,
-            check=True,
-            timeout=12,
-        )
-        return current_app.response_class(
-            response.stdout,
-            status=200,
-            mimetype="text/plain",
-        )
-    except (FileNotFoundError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
-        logger.warning("password range lookup failed: %s", error)
-        return json_error("泄露库暂时不可用", 502)
 
 
 @bp.post("/api/password-check-count")

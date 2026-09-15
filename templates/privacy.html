@@ -11,7 +11,7 @@
   <h2 class="text-lg font-semibold">匿名会话</h2>
   <p>浏览器 localStorage 保存随机 session_id，用于清单进度和匿名统计。不是登录账号。</p>
   <h2 class="text-lg font-semibold">第三方请求</h2>
-  <p>密码检查只会把 SHA-1 哈希的前 5 位（k-匿名）用于查询泄露库；密码和完整哈希不会离开浏览器。</p>
+  <p>密码泄露自查通过我们的后端代理转发 SHA-1 前缀到 Have I Been Pwned 的 Pwned Passwords API。代理不记录、不存储、不缓存任何请求内容。你的完整密码和完整哈希永远不会离开浏览器。</p>
   <h2 class="text-lg font-semibold">免责声明</h2>
   <p>工具结果仅供参考，不能替代警方、银行或学校的官方核实，也不构成法律意见。</p>
   <h2 class="text-lg font-semibold">联系方式</h2>
