@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}隐私政策 - 安心查{% endblock %}
+{% block content %}
+<article class="prose max-w-3xl space-y-4">
+  <h1 class="text-2xl font-bold">隐私政策</h1>
+  <p>安心查（SafeCheck）面向普通用户提供安全自查。我们优先保护隐私，不承诺绝对安全。</p>
+  <h2 class="text-lg font-semibold">我们不收集密码</h2>
+  <p>密码检查在浏览器内完成。服务器不接收密码，也不接收完整哈希。</p>
+  <h2 class="text-lg font-semibold">不保存可疑信息原文</h2>
+  <p>可疑短信/邮件只保存 SHA-256 哈希、风险分、原因标签和时间。</p>
+  <h2 class="text-lg font-semibold">匿名会话</h2>
+  <p>浏览器 localStorage 保存随机 session_id，用于清单进度和匿名统计。不是登录账号。</p>
+  <h2 class="text-lg font-semibold">第三方请求</h2>
+  <p>密码检查只会把 SHA-1 哈希的前 5 位（k-匿名）用于查询泄露库；密码和完整哈希不会离开浏览器。</p>
+  <h2 class="text-lg font-semibold">免责声明</h2>
+  <p>工具结果仅供参考，不能替代警方、银行或学校的官方核实，也不构成法律意见。</p>
+  <h2 class="text-lg font-semibold">联系方式</h2>
+  <p>请通过 GitHub Issues 或站点反馈页联系（占位：your-email@example.com）。</p>
+</article>
+{% endblock %}

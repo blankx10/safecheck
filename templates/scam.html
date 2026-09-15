@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}可疑信息自查 - 安心查{% endblock %}
+{% block content %}
+<section class="space-y-6 max-w-3xl">
+  <h1 class="text-2xl font-bold">可疑短信 / 链接 / 邮件自查</h1>
+  <p class="text-slate-600">把收到的内容粘贴到下面。我们<strong>不会打开链接</strong>，也<strong>不会保存原文</strong>，只保存哈希和风险标签。</p>
+
+  <form
+    class="space-y-3 bg-white rounded-2xl p-5 shadow"
+    hx-post="/api/scam-check"
+    hx-target="#scam-result"
+    hx-swap="innerHTML"
+  >
+    <input type="hidden" name="session_id" id="scam-session-id">
+    <label class="block font-medium" for="scam-text">粘贴短信、邮件或链接</label>
+    <textarea
+      id="scam-text"
+      name="text"
+      maxlength="5000"
+      required
+      rows="8"
+      class="w-full border rounded-xl p-3"
+      placeholder="例如：您的银行卡即将冻结，请立即点击链接验证……"
+    ></textarea>
+    <p class="text-xs text-slate-500">最多 5000 字。请不要点击原文里的链接。</p>
+    <button type="submit" class="bg-blue-700 text-white rounded-xl px-5 py-2 hover:bg-blue-800 disabled:opacity-50">
+      开始自查
+    </button>
+  </form>
+
+  <div id="scam-result" aria-live="polite"></div>
+  <p class="text-sm text-amber-800 bg-amber-50 rounded-xl p-4">免责声明：本结果由规则引擎生成，仅供参考，不构成法律或安全保证。遇到紧急财产风险请报警或拨打官方客服。</p>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  document.getElementById("scam-session-id").value = window.safecheckSessionId || "";
+</script>
+{% endblock %}

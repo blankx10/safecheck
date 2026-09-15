@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}安心查 - 3 分钟账号安全自查{% endblock %}
+{% block content %}
+<section class="space-y-8">
+  <div class="text-center space-y-3">
+    <h1 class="text-3xl font-bold text-slate-900">你的账号安全吗？3 分钟自查</h1>
+    <p class="text-slate-600">不上传密码，不保存可疑信息原文。打开网页就能用，无需注册。</p>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-3">
+    <a href="/scam" class="block rounded-2xl bg-white p-6 shadow hover:shadow-md border border-slate-100">
+      <h2 class="text-lg font-semibold text-blue-700">可疑短信/链接自查</h2>
+      <p class="mt-2 text-sm text-slate-600">粘贴内容，由规则引擎评估风险。我们不会打开链接。</p>
+    </a>
+    <a href="/password" class="block rounded-2xl bg-white p-6 shadow hover:shadow-md border border-slate-100">
+      <h2 class="text-lg font-semibold text-green-700">密码泄露自查</h2>
+      <p class="mt-2 text-sm text-slate-600">密码留在浏览器里，只用哈希前 5 位查询公开泄露库。</p>
+    </a>
+    <a href="/checklist" class="block rounded-2xl bg-white p-6 shadow hover:shadow-md border border-slate-100">
+      <h2 class="text-lg font-semibold text-slate-800">账号加固清单</h2>
+      <p class="mt-2 text-sm text-slate-600">按邮箱、银行、社交、学校、云盘逐项勾选，生成修复计划。</p>
+    </a>
+  </div>
+
+  <div class="rounded-2xl bg-blue-50 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div>
+      <h2 class="font-semibold">防诈骗情景小测试</h2>
+      <p class="text-sm text-slate-600 mt-1">20 道互动题，帮老人、学生和留学生识别常见骗局。</p>
+    </div>
+    <a href="/quiz" class="inline-block bg-blue-700 text-white rounded-xl px-5 py-2 hover:bg-blue-800">开始测试</a>
+  </div>
+
+  <p class="text-sm text-slate-500">隐私说明：本站不收集密码，可疑原文只在你的浏览器提交时计算哈希，数据库不保存原文。结果仅供参考，不能保证绝对安全。</p>
+</section>
+{% endblock %}

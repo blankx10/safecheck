@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}关于 - 安心查{% endblock %}
+{% block content %}
+<article class="space-y-6 max-w-3xl">
+  <h1 class="text-2xl font-bold">关于安心查</h1>
+  <p>很多人收到诈骗短信后不知道该不该点链接，也不敢把密码交给网站检查。安心查把常用自查做成免费、无需登录的小工具：规则引擎评估话术风险，浏览器内完成密码泄露查询，再用清单和情景题帮助加固账号。</p>
+  <h2 class="text-lg font-semibold">技术栈</h2>
+  <p>Python / Flask / SQLite 或 Postgres、Jinja2、HTMX、Tailwind CDN、zxcvbn、HIBP Pwned Passwords Range API。</p>
+  <h2 class="text-lg font-semibold">开源</h2>
+  <p>代码托管于 GitHub 公开仓库（部署后请替换为你的仓库地址）。</p>
+  <h2 class="text-lg font-semibold">English overview</h2>
+  <p>SafeCheck is a privacy-first, no-login web app that helps everyday users, students, and older adults check suspicious messages, test password exposure with k-anonymity, follow an account-hardening checklist, and practice scam scenarios. It never stores passwords or original message text, does not visit malicious links, and does not claim absolute security.</p>
+</article>
+{% endblock %}

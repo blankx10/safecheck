@@ -1,0 +1,17 @@
+{% set colors = {"低": "bg-green-50 text-green-800 border-green-200", "中": "bg-yellow-50 text-yellow-900 border-yellow-200", "高": "bg-red-50 text-red-800 border-red-200"} %}
+<article class="rounded-2xl border p-5 {{ colors.get(result.risk_level, 'bg-slate-50') }}">
+  <h2 class="text-xl font-semibold">风险分：{{ result.risk_score }} / 100（{{ result.risk_level }}风险）</h2>
+  <h3 class="mt-4 font-medium">原因</h3>
+  <ul class="list-disc pl-5 space-y-1">
+    {% for reason in result.reasons %}
+    <li>{{ reason }}</li>
+    {% endfor %}
+  </ul>
+  <h3 class="mt-4 font-medium">建议</h3>
+  <ul class="list-disc pl-5 space-y-1">
+    {% for tip in result.advice %}
+    <li>{{ tip }}</li>
+    {% endfor %}
+  </ul>
+  <p class="mt-4 text-sm">{{ result.disclaimer }}</p>
+</article>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}账号加固清单 - 安心查{% endblock %}
+{% block content %}
+<section class="space-y-6">
+  <h1 class="text-2xl font-bold">账号加固清单</h1>
+  <p class="text-slate-600">勾选你已经完成的项目。进度保存在匿名会话中，不需要登录。</p>
+  <div>
+    <p class="text-sm mb-1">总进度 <span id="progress-label">0 / 0</span></p>
+    <div class="h-3 bg-slate-200 rounded-full overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-wrap">
+      <div id="progress-bar" class="h-full bg-green-600 w-0"></div>
+    </div>
+  </div>
+  <div class="flex flex-wrap items-center gap-3">
+    <label class="text-sm font-medium" for="checklist-filter">显示</label>
+    <select id="checklist-filter" class="border rounded-xl px-3 py-2 bg-white">
+      <option value="all">全部项目</option>
+      <option value="todo">未完成</option>
+      <option value="high">高优先级</option>
+    </select>
+    <button type="button" id="plan-button" class="bg-blue-700 text-white rounded-xl px-5 py-2 hover:bg-blue-800">生成修复计划</button>
+    <span id="checklist-status" class="text-sm text-slate-500" role="status" aria-live="polite"></span>
+  </div>
+  <div id="plan-box" class="hidden bg-yellow-50 border border-yellow-200 rounded-2xl p-5"></div>
+  <div id="checklist-root" class="space-y-6"></div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/checklist.js') }}"></script>
+{% endblock %}

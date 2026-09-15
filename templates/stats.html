@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}匿名统计 - 安心查{% endblock %}
+{% block content %}
+<section class="space-y-6">
+  <h1 class="text-2xl font-bold">匿名统计</h1>
+  <p class="text-slate-600">以下仅为合计数字，不展示任何个人数据、原文或哈希。</p>
+  <div class="grid gap-4 md:grid-cols-2">
+    <div class="bg-white rounded-2xl p-5 shadow"><p class="text-sm text-slate-500">可疑信息检测次数</p><p class="text-3xl font-bold">{{ stats.scam_check_count }}</p></div>
+    <div class="bg-white rounded-2xl p-5 shadow"><p class="text-sm text-slate-500">密码检查次数</p><p class="text-3xl font-bold">{{ stats.password_check_count }}</p></div>
+    <div class="bg-white rounded-2xl p-5 shadow"><p class="text-sm text-slate-500">测验答题次数</p><p class="text-3xl font-bold">{{ stats.quiz_answer_count }}</p></div>
+    <div class="bg-white rounded-2xl p-5 shadow"><p class="text-sm text-slate-500">测验平均正确率</p><p class="text-3xl font-bold">{{ stats.quiz_accuracy_percent }}%</p></div>
+    <div class="bg-white rounded-2xl p-5 shadow"><p class="text-sm text-slate-500">反馈数量</p><p class="text-3xl font-bold">{{ stats.feedback_count }}</p></div>
+    <div class="bg-white rounded-2xl p-5 shadow"><p class="text-sm text-slate-500">平均评分</p><p class="text-3xl font-bold">{{ stats.feedback_avg_rating }}</p></div>
+  </div>
+  <div class="bg-white rounded-2xl p-5 shadow">
+    <h2 class="font-semibold mb-3">风险等级分布</h2>
+    <ul class="space-y-1">
+      <li>低：{{ stats.risk_distribution["低"] }}</li>
+      <li>中：{{ stats.risk_distribution["中"] }}</li>
+      <li>高：{{ stats.risk_distribution["高"] }}</li>
+    </ul>
+  </div>
+  <p class="text-sm text-amber-800 bg-amber-50 rounded-xl p-4">免责声明：统计来自真实请求聚合，不做数据造假。结果仅供参考。</p>
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+<article class="rounded-2xl bg-white p-5 shadow space-y-3">
+  <h2 class="text-xl font-semibold">得分：{{ score }} / {{ total }}（正确率 {{ percent }}%）</h2>
+  <p class="text-slate-600">错题回顾可以帮助记忆。遇到真实情况，请走官方渠道核实。</p>
+  {% if wrong_items %}
+  <ul class="space-y-3">
+    {% for item in wrong_items %}
+    <li class="border rounded-xl p-3">
+      <p class="font-medium">{{ item.question }}</p>
+      <p class="text-sm text-red-700">你的选择：{{ item.chosen }}</p>
+      <p class="text-sm text-green-700">较稳妥的做法：{{ item.correct }}</p>
+      <p class="text-sm text-slate-600">{{ item.explanation }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="text-green-700">全部答对了。请继续保持警惕，安全没有绝对保证。</p>
+  {% endif %}
+</article>
